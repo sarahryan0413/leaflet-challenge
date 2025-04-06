@@ -81,16 +81,16 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
 
     // Create a popup for each marker to display the magnitude and location of the earthquake after the marker has been created and styled
     onEachFeature: function (feature, layer) {
-      layer.bindPopup("<h3>" + feature.properties.title + "</h3><hr><p>Magnitude: " + feature.properties.mag + "</p><p>Location: " + feature.properties.place + "</p>")
+      layer.bindPopup("<h3>" + feature.properties.title +                         // title as header
+                      "</h3><hr><p>Magnitude: " + feature.properties.mag +        // magnitude
+                      "</p><p>Location: " + feature.properties.place + "</p>")    // location
     }
 
   // Add the data to the earthquake layer instead of directly to the map.
   }).addTo(myMap);
 
   // Create a legend control object.
-  let legend = L.control({
-    position: "bottomright"
-  });
+  let legend = L.control({position: "bottomright"});
 
   // Then add all the details for the legend
   legend.onAdd = function () {
@@ -99,18 +99,26 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
     // Initialize depth intervals and colors for the legend
     const depthIntervals = [0, 10, 30, 50, 70, 90];  
     const colors = ["#00FF00", "#FFFF00", "#FFA500", "#FF7F00", "#FF4500", "#8B0000"];
+    let labels = [];
 
-    // Loop through our depth intervals to generate a label with a colored square for each interval.
+    // Loop through intervals to create a color box next to each depth range
     for (let i = 0; i < depthIntervals.length; i++) {
-      div.innerHTML +=
-      '<i style="background:' + colors[i] + '"></i> ' +
-      depthIntervals[i] + (depthIntervals[i + 1] ? "&ndash;" + depthIntervals[i + 1] + " km<br>" : "+ km");
+      labels.push("<div style='background-color: " + colors[i] + "; height: 20px; width: 20px; display: block; margin-bottom: 5px;'></div>" + 
+                  depthIntervals[i] + (depthIntervals[i + 1] ? "&ndash;" + depthIntervals[i + 1] + " km" : "+ km"));
     }
+
+    // Add the depth range labels with colored squares to the legend
+    div.innerHTML = "<div style='background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);'>" +
+                    labels.join("") + 
+                    "</div>";
     return div;
   };
 
-  // Finally, add the legend to the map.
+  // Add the legend to the map
   legend.addTo(myMap);
+});
+
+
 
   // OPTIONAL: Step 2
   // Make a request to get our Tectonic Plate geoJSON data.
@@ -121,4 +129,4 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
     // Then add the tectonic_plates layer to the map.
 
   });
-});
+
