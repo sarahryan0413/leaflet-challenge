@@ -86,7 +86,6 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
 
   // Add the data to the earthquake layer instead of directly to the map.
   }).addTo(myMap);
-};
 
   // Create a legend control object.
   let legend = L.control({
@@ -98,14 +97,15 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
     let div = L.DomUtil.create("div", "info legend");
 
     // Initialize depth intervals and colors for the legend
-    const depthIntervals = [0, 10, 30, 50, 100];  
-    const colors = ["#00FF00", "#FFFF00", "#FFA500", "#FF0000"];
+    const depthIntervals = [0, 10, 30, 50, 70, 90];  
+    const colors = ["#00FF00", "#FFFF00", "#FFA500", "#FF7F00", "#FF4500", "#8B0000"];
 
     // Loop through our depth intervals to generate a label with a colored square for each interval.
-    for (let i = 0, i < depthIntervals.length; i++) {
-
+    for (let i = 0; i < depthIntervals.length; i++) {
+      div.innerHTML +=
+      '<i style="background:' + colors[i] + '"></i> ' +
+      depthIntervals[i] + (depthIntervals[i + 1] ? "&ndash;" + depthIntervals[i + 1] + " km<br>" : "+ km");
     }
-
     return div;
   };
 
