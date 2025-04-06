@@ -1,6 +1,6 @@
-//-------------------------------
+//--------------------------------------------------------------
 // 1. Create Initial Map
-//-------------------------------
+//--------------------------------------------------------------
 
 // Create the 'basemap' tile layer that will be the background of our map.
 let basemap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
@@ -28,9 +28,10 @@ let baseMaps = {
 // Add layer control to the map.
 L.control.layers(baseMaps).addTo(myMap);
 
-//-------------------------------
+
+//--------------------------------------------------------------
 // 2. Add Earthquake Data
-//-------------------------------
+//--------------------------------------------------------------
 
 // This function returns the style data for each of the earthquakes we plot on the map. 
   // Pass the magnitude and depth of the earthquake into two separate functions to calculate the color and radius.
@@ -90,9 +91,10 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
   }).addTo(myMap);
 });
 
-//-------------------------------
+
+//--------------------------------------------------------------
 // 3. Add Tectonic Plate Data
-//-------------------------------
+//--------------------------------------------------------------
 
 // Tectonic plates style options
 const tectonicStyle = {
@@ -111,9 +113,10 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
   }).addTo(myMap);
 });
 
-//-------------------------------
+
+//--------------------------------------------------------------
 // 4. Add Legend
-//-------------------------------
+//--------------------------------------------------------------
 
 // Create a legend control object.
 let legend = L.control({position: "bottomright"});
