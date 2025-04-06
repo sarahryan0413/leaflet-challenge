@@ -1,14 +1,28 @@
 // Create the 'basemap' tile layer that will be the background of our map.
+let basemap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+});      // topographic view → more geographic context (nice for earthquakes).
 
-
-// OPTIONAL: Step 2
 // Create the 'street' tile layer as a second background of the map
-
+let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});      // street map standard view → clean, familiar base.
 
 // Create the map object with center and zoom options.
+let myMap = L.map("map", {
+  center: [44.977753, -93.265015],    // initializes the map centered on Minneapolis, MN
+  zoom: 4,                            // set the zoom level so that the entire US is shown
+  layers: [basemap]                   // default layer is set to "basemap"
+});
 
+// Define baseMaps for layer control.
+let baseMaps = {
+  Street: street,
+  Topography: basemap
+};
 
-// Then add the 'basemap' tile layer to the map.
+// Add layer control to the map.
+L.control.layers(baseMaps).addTo(myMap);
 
 // OPTIONAL: Step 2
 // Create the layer groups, base maps, and overlays for our two sets of data, earthquakes and tectonic_plates.
